@@ -28,8 +28,6 @@ jobs:
           npm ci
           cd src/random-with-friends
           npm ci
-          cd ../../test/e2e
-          npm ci
 
       - name: Format Check
         run: npm run format -- --check
@@ -80,7 +78,9 @@ jobs:
 
       - name: Install All Dependencies
         run: |
-          cd ./test/e2e
+          cd src/random-with-friends
+          npm ci
+          cd ../../test/e2e
           npm ci
 
       - name: Download Build Artifact
