@@ -44,12 +44,14 @@ jobs:
           cd src/random-with-friends
           npm run build
     
-      - name: Upload Build Output on Failure
+      - name: Upload Build Output
         uses: actions/upload-artifact@v4
         with:
           name: random-with-friends-build
           path: src/random-with-friends/.next/
           retention-days: 1
+          if-no-files-found: error
+          include-hidden-files: true
 
   playwright:
     name: Run Playwright E2E Tests
