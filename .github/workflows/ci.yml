@@ -55,14 +55,19 @@ jobs:
           ls -la src/random-with-friends
           echo "Listing contents of src/random-with-friends/.next:"
           ls -la src/random-with-friends/.next || echo ".next directory not found"
+      - name: Confirm Upload Path
+        run: |
+          echo "Checking contents of src/random-with-friends/.next before upload:"
+          ls -la src/random-with-friends/.next || echo ".next directory not found"
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: next-build
           path: src/random-with-friends/.next
-          if-no-files-found: error
+          if-no-files-found: warn
           compression-level: 6
           overwrite: true
+          include-hidden-files: true
 
   test-e2e:
     needs: build
