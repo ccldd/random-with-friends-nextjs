@@ -1,0 +1,42 @@
+# Page snapshot
+
+```yaml
+- generic:
+  - main:
+    - generic:
+      - generic:
+        - heading [level=1]: Random With Friends
+        - paragraph: Create a room or join an existing one.
+      - generic:
+        - generic:
+          - generic:
+            - generic: Display Name
+            - textbox:
+              - /placeholder: Your name
+          - button: Create Room
+      - generic:
+        - paragraph: Already have a room code?
+        - button: Join Room
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e6] [cursor=pointer]:
+    - img [ref=e7]
+  - alert
+  - dialog "Join Room" [ref=e11]:
+    - heading "Join Room" [level=2] [ref=e13]
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - generic [ref=e16]: Room Code
+        - textbox "Room Code" [active] [ref=e17]:
+          - /placeholder: Enter room code
+          - text: non-existent-room
+        - paragraph [ref=e18]: "Too big: expected string to have <=12 characters"
+      - generic [ref=e19]:
+        - generic [ref=e20]: Display Name
+        - textbox "Display Name" [ref=e21]:
+          - /placeholder: Your name
+          - text: Test User
+      - button "Join Room" [ref=e22]
+    - button "Close" [ref=e23]:
+      - img
+      - generic [ref=e24]: Close
+```
