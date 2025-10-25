@@ -7,56 +7,78 @@ on:
     branches: [main]
 
 jobs:
-  lint-and-test:
+  lint:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Use Node.js 20
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
-
-      - name: Install root dev dependencies (format)
-        run: |
-          npm ci
-
-      - name: Format check (Prettier)
-        run: |
-          npm run format -- --check
-
+      - name: Install root dependencies
+        run: npm ci
+      - name: Format check
+        run: npm run format -- --check
       - name: Install app dependencies
         run: |
           cd src/random-with-friends
           npm ci
-
-      - name: Lint app (ESLint)
+      - name: Lint
         run: |
           cd src/random-with-friends
           npm run lint -- --max-warnings=0
 
-      - name: Build app
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: |
+          cd src/random-with-friends
+          npm ci
+      - name: Build
         run: |
           cd src/random-with-friends
           npm run build
-
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-build
+          path: src/random-with-friends/.next
+          
+  test-e2e:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: next-build
+          path: src/random-with-friends/.next
+      - name: Install app dependencies
+        run: |
+          cd src/random-with-friends
+          npm ci
       - name: Install e2e dependencies
         run: |
           cd test/e2e
           npm ci
           npx playwright install --with-deps
-
-      - name: Run Playwright E2E (production build)
+      - name: Run E2E tests
         env:
           PLAYWRIGHT_USE_PROD: '1'
           PLAYWRIGHT_BASE_URL: 'http://localhost:3000'
         run: |
           cd test/e2e
           npm test
-
-      - name: Upload Playwright report
+      - name: Upload test results
         if: failure()
         uses: actions/upload-artifact@v4
         with:
