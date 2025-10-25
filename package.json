@@ -1,0 +1,13 @@
+{
+  "name": "random-with-friends-root",
+  "private": true,
+  "workspaces": [
+    "src/*"
+  ],
+  "devDependencies": {
+    "prettier": "^2.8.8"
+  },
+  "scripts": {
+    "format": "prettier --write \"**/*.{js,ts,tsx,css,md,json,html,jsx}\" --ignore-path .prettierignore"
+  }
+}

@@ -1,0 +1,18 @@
+node_modules
+.next
+dist
+build
+coverage
+.env
+.env.local
+.vscode
+*.log
+public
+README.md
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Ignore generated types and lockfiles
+src/generated
+
