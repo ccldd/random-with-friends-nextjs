@@ -1,0 +1,83 @@
+{
+  "version": "1.0.0",
+  "models": {
+    "tasks": {
+      "model": "claude",
+      "purpose": "Task breakdown and planning",
+      "parameters": {
+        "temperature": 0.7,
+        "maxTokens": 2000
+      }
+    },
+    "specify": {
+      "model": "gpt-4",
+      "purpose": "Technical specification and architecture",
+      "parameters": {
+        "temperature": 0.7,
+        "maxTokens": 2000
+      }
+    },
+    "execute": {
+      "model": "copilot",
+      "purpose": "Code implementation and execution",
+      "parameters": {
+        "temperature": 0.2,
+        "maxTokens": 2000
+      }
+    }
+  },
+  "workflows": {
+    "default": {
+      "steps": [
+        {
+          "name": "plan",
+          "model": "tasks",
+          "description": "Break down the task into actionable steps"
+        },
+        {
+          "name": "specify",
+          "model": "specify",
+          "description": "Create technical specification"
+        },
+        {
+          "name": "execute",
+          "model": "execute",
+          "description": "Implement the solution"
+        },
+        {
+          "name": "review",
+          "model": "tasks",
+          "description": "Review implementation against plan"
+        }
+      ]
+    },
+    "quickfix": {
+      "steps": [
+        {
+          "name": "execute",
+          "model": "execute",
+          "description": "Quick implementation"
+        },
+        {
+          "name": "review",
+          "model": "tasks",
+          "description": "Brief review"
+        }
+      ]
+    }
+  },
+  "prompts": {
+    "tasks": {
+      "system": "You are a skilled project manager focused on breaking down tasks and creating execution plans.",
+      "context": "Consider project constraints, dependencies, and risk factors."
+    },
+    "specify": {
+      "system": "You are a senior software architect specialized in creating detailed technical specifications.",
+      "context": "Consider system design, patterns, and best practices."
+    },
+    "execute": {
+      "system": "You are an expert programmer focused on implementing solutions efficiently.",
+      "context": "Focus on clean, maintainable, and tested code."
+    }
+  }
+}
