@@ -35,6 +35,11 @@ jobs:
         run: |
           cd src/random-with-friends
           npm ci
+      - name: Upload app node_modules
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-node-modules
+          path: src/random-with-friends/node_modules
       - name: Lint
         run: |
           cd src/random-with-friends
@@ -66,10 +71,11 @@ jobs:
         with:
           name: next-build
           path: src/random-with-friends/.next
-      - name: Install app dependencies
-        run: |
-          cd src/random-with-friends
-          npm ci
+      - name: Download app node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: app-node-modules
+          path: src/random-with-friends/node_modules
       - name: Install e2e dependencies
         run: |
           cd test/e2e
