@@ -7,28 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install root dependencies
-        run: npm ci
-      - name: Format check
-        run: npm run format -- --check
-      - name: Install app dependencies
-        run: |
-          cd src/random-with-friends
-          npm ci
-      - name: Lint
-        run: |
-          cd src/random-with-friends
-          npm run lint -- --max-warnings=0
-
-  build:
-    needs: lint
+  lint-and-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -41,24 +20,20 @@ jobs:
             src/random-with-friends/package-lock.json
       - name: Install root dependencies
         run: npm ci
+      - name: Format check
+        run: npm run format -- --check
       - name: Install app dependencies
         run: |
           cd src/random-with-friends
           npm ci
+      - name: Lint
+        run: |
+          cd src/random-with-friends
+          npm run lint -- --max-warnings=0
       - name: Build
         run: |
           cd src/random-with-friends
           npm run build
-      - name: Debug Build Output
-        run: |
-          echo "Listing contents of src/random-with-friends after build:"
-          ls -la src/random-with-friends
-          echo "Listing contents of src/random-with-friends/.next:"
-          ls -la src/random-with-friends/.next || echo ".next directory not found"
-      - name: Confirm Upload Path
-        run: |
-          echo "Checking contents of src/random-with-friends/.next before upload:"
-          ls -la src/random-with-friends/.next || echo ".next directory not found"
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -70,7 +45,7 @@ jobs:
           include-hidden-files: true
 
   test-e2e:
-    needs: build
+    needs: lint-and-build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -82,10 +57,6 @@ jobs:
         with:
           name: next-build
           path: src/random-with-friends/.next
-      - name: Install app dependencies
-        run: |
-          cd src/random-with-friends
-          npm ci
       - name: Install e2e dependencies
         run: |
           cd test/e2e
