@@ -66,6 +66,10 @@ jobs:
         with:
           name: next-build
           path: src/random-with-friends/.next
+      - name: Install app dependencies
+        run: |
+          cd src/random-with-friends
+          npm ci
       - name: Install e2e dependencies
         run: |
           cd test/e2e
