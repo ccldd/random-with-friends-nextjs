@@ -44,18 +44,15 @@ jobs:
           cd src/random-with-friends
           npm run build
 
-      - name: Install Playwright Browsers
-        run: |
-          cd test/e2e
-          npx playwright install --with-deps
-
       - name: Run Playwright E2E Tests
+        uses: docker://mcr.microsoft.com/playwright:v1.37.0-focal
         env:
           PLAYWRIGHT_USE_PROD: '1'
           PLAYWRIGHT_BASE_URL: 'http://localhost:3000'
-        run: |
-          cd test/e2e
-          npm test
+        with:
+            args: |
+                cd test/e2e
+                npm test
 
       - name: Upload Playwright Report on Failure
         if: failure()
