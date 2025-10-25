@@ -23,14 +23,6 @@ jobs:
             src/random-with-friends/package-lock.json
             test/e2e/package-lock.json
 
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('test/e2e/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
-
       - name: Install All Dependencies
         run: |
           npm ci
