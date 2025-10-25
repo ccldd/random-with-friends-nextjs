@@ -49,6 +49,12 @@ jobs:
         run: |
           cd src/random-with-friends
           npm run build
+      - name: Debug Build Output
+        run: |
+          echo "Listing contents of src/random-with-friends after build:"
+          ls -la src/random-with-friends
+          echo "Listing contents of src/random-with-friends/.next:"
+          ls -la src/random-with-friends/.next || echo ".next directory not found"
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -57,7 +63,7 @@ jobs:
           if-no-files-found: error
           compression-level: 6
           overwrite: true
-          
+
   test-e2e:
     needs: build
     runs-on: ubuntu-latest
