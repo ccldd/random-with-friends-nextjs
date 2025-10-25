@@ -35,7 +35,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install dependencies
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            src/random-with-friends/package-lock.json
+      - name: Install root dependencies
+        run: npm ci
+      - name: Install app dependencies
         run: |
           cd src/random-with-friends
           npm ci
@@ -48,6 +54,9 @@ jobs:
         with:
           name: next-build
           path: src/random-with-friends/.next
+          if-no-files-found: error
+          compression-level: 6
+          overwrite: true
           
   test-e2e:
     needs: build
