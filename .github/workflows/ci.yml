@@ -18,8 +18,17 @@ jobs:
           cache-dependency-path: |
             package-lock.json
             src/random-with-friends/package-lock.json
+      - name: Cache NPM dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-cache-
+
       - name: Install root dependencies
         run: npm ci
+
       - name: Format check
         run: npm run format -- --check
       - name: Install app dependencies
