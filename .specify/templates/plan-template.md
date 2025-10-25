@@ -17,36 +17,118 @@
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: [e.g., TypeScript 5.x, Node.js version]  
+**Primary Dependencies**: [e.g., Next.js version, key libraries]
+
+**UI Framework**:
+
+- Next.js App Router
+- shadcn/ui components
+- Tailwind CSS
+- TypeScript strict mode
+
+**Responsive Requirements**:
+
+- Mobile: 320px - 767px
+- Tablet: 768px - 1023px
+- Desktop: 1024px - 1439px
+- Large Desktop: 1440px+
+- Touch targets: min 44x44px
+- Fluid typography scales
+- Responsive images/media
+
+**Monitoring Stack**:
+
+- Structured JSON logging
+- Error tracking
+- Performance monitoring
+- Web Vitals tracking
+- Real-time status
+- Request timing
+
+**Testing**:
+
+- Playwright E2E tests
+- Responsive testing
+- Performance testing
+- Unit tests (optional)
+
+**Platform**:
+
+- Local development
+- Vercel deployment
+- Modern browsers support
+
+**Performance Goals**:
+
+- Load Time: < 3s (desktop), < 5s (mobile)
+- First Input Delay: < 100ms
+- Cumulative Layout Shift: < 0.1
+- First Contentful Paint: < 1.8s
+
+**Scale/Scope**:
+
+- Expected user base
+- Concurrent users
+- Data volume
+- Feature scope
 
 ## Constitution Check
 
 _GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 Project plans MUST explicitly verify the following constitution gates before Phase 0 can
-proceed. Each gate is a yes/no check with an explanation when "no":
+proceed. Each gate is a yes/no check with explanation:
 
-- TypeScript First: code targets TypeScript and the plan documents any non-TS components.
-- Framework & UI Stack: plan uses Next.js + shadcn + Tailwind OR provides an approved
-  justification and migration plan.
-- Formatting & Linting: plan confirms Prettier and ESLint configurations and CI checks.
-- Realtime/Integration: if realtime is proposed, plan names the library (preferred: pusher-js)
-  and documents why an alternative is used.
-- Observability/Versioning: plan lists basic logging and versioning expectations for any
-  public-facing interfaces or APIs.
+### TypeScript First
 
-- Testing: plan MUST use Playwright for full-app E2E testing of Next.js user journeys, or
-  provide an explicit justification why Playwright cannot be used and how equivalent E2E
-  coverage will be achieved. Unit/component tests are allowed but are not a substitute for
-  Playwright E2E coverage on user-facing features.
+- Code targets TypeScript with strict mode
+- Type declarations for public interfaces
+- No untyped JavaScript allowed
+
+### Framework & UI Stack
+
+- Next.js App Router implementation
+- shadcn + Tailwind CSS for UI
+- Server/Client component separation
+- Responsive Design Requirements:
+  - Mobile-first development (320px+)
+  - Tablet support (768px+)
+  - Desktop support (1024px+)
+  - Fluid typography and spacing
+  - Touch-friendly interactions
+  - No horizontal overflow
+  - Responsive images
+
+### Project Structure
+
+- app/ directory with proper routing
+- components/ for UI components
+- lib/ for shared utilities
+- Proper route segmentation
+
+### Observability & Monitoring
+
+- Structured JSON logging
+- Performance monitoring setup
+- Error tracking configuration
+- Real-time status tracking
+- Web Vitals monitoring
+- Loading states and error boundaries
+
+### Quality & Testing
+
+- Prettier and ESLint configured
+- Playwright E2E tests for user flows
+- Responsive design tests
+- Performance benchmarks
+
+### Platform & Integration
+
+- Local development support
+- Vercel deployment setup
+- Realtime features (prefer pusher-js)
+- Monitoring integration with Vercel
 
 Plans that cannot meet these gates MUST include an explicit technical justification and an
 approval path via governance before research resources are allocated.
