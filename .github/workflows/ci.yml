@@ -43,7 +43,7 @@ jobs:
         run: |
           cd src/random-with-friends
           npm run build
-    
+
       - name: Upload Build Output
         uses: actions/upload-artifact@v4
         with:
@@ -61,8 +61,8 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.56.1-noble
       options: --user 1001
     env:
-        PLAYWRIGHT_USE_PROD: '1'
-        PLAYWRIGHT_BASE_URL: 'http://localhost:3000'
+      PLAYWRIGHT_USE_PROD: '1'
+      PLAYWRIGHT_BASE_URL: 'http://localhost:3000'
 
     steps:
       - name: Checkout
@@ -91,6 +91,7 @@ jobs:
 
       - name: Run Playwright E2E Tests
         run: |
+          cd ./test/e2e
           npm run test
 
       - name: Upload Playwright Report on Failure
