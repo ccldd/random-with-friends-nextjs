@@ -37,7 +37,7 @@ export default defineConfig({
   webServer: useProd
     ? {
         // Build and start the production server for CI/release validation
-        command: 'npm run build && npm run start',
+        command: 'npm run start',
         cwd: '../../src/random-with-friends',
         url: 'http://localhost:3000',
         timeout: 180_000,
