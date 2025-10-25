@@ -10,7 +10,17 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: isCi,
   retries: isCi ? 2 : 0,
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: [
+    ['list'],
+    [
+      'html',
+      {
+        open: 'never',
+        outputDir: './playwright-report',
+        outputFolder: new Date().toISOString().split('T')[0],
+      },
+    ],
+  ],
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3000',
     headless: true,
