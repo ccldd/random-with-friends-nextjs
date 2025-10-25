@@ -11,7 +11,7 @@ Auto-generated from all feature plans. Last updated: 2025-10-25
 - pusher-js (preferred for realtime features)
 - Prettier (code formatting)
 - ESLint (linting)
- - Playwright (E2E testing)
+- Playwright (E2E testing)
 
 ## Project Structure
 
