@@ -91,7 +91,7 @@ jobs:
 
       - name: Run Playwright E2E Tests
         run: |
-          npm test
+          npm run test
 
       - name: Upload Playwright Report on Failure
         if: failure()
