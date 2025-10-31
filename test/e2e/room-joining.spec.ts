@@ -216,17 +216,18 @@ test.describe('Room Joining', () => {
 
   test('should show join room form on home page', async ({ page }) => {
     await page.goto('/');
-    
+
     // Click join room button
     await page.click('button:has-text("Join Room")');
-    
-    // Wait for dialog to open
-    await page.waitForSelector('input[name="roomId"]', { state: 'visible' });
-    
-    // Verify form elements in dialog
-    await expect(page.locator('input[name="roomId"]')).toBeVisible();
-    await expect(page.locator('input[name="displayName"]')).toBeVisible();
-    await expect(page.locator('button:has-text("Join Room")')).toBeVisible();
+
+    // Wait for dialog to open and get it
+    const dialog = page.locator('[role="dialog"]');
+    await dialog.waitFor({ state: 'visible' });
+
+    // Verify form elements in dialog (scoped to dialog)
+    await expect(dialog.locator('input[name="roomId"]')).toBeVisible();
+    await expect(dialog.locator('input[name="displayName"]')).toBeVisible();
+    await expect(dialog.locator('button:has-text("Join Room")')).toBeVisible();
   });
 
   test('should show connection status for guests', async ({ page, context }) => {

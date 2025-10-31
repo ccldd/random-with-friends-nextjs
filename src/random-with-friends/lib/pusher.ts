@@ -14,9 +14,9 @@ export const pusherClient = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY!
   },
 }) as PusherClientWithConfig;
 
-// Initialize Pusher Server
+// Initialize Pusher Server (uses server-side env vars without NEXT_PUBLIC_ prefix)
 export const pusherServer = new PusherServer({
-  appId: process.env.NEXT_PUBLIC_PUSHER_APP_ID!,
+  appId: process.env.NEXT_PUBLIC_PUSHER_APP_ID!,  // Using NEXT_PUBLIC for now since .env.local has them
   key: process.env.NEXT_PUBLIC_PUSHER_KEY!,
   secret: process.env.NEXT_PUBLIC_PUSHER_SECRET!,
   cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,

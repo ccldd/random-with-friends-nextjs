@@ -19,24 +19,31 @@ export interface ParticipantInfo {
  */
 export async function createRoom(page: Page, hostName: string): Promise<RoomInfo> {
   await page.goto('/');
-  
-  // Fill in the create room form
-  await page.fill('input[name="displayName"]', hostName);
-  
+
+  // Wait for the page to load
+  await page.waitForLoadState('domcontentloaded');
+
+  // Find the create room form (not in a dialog) and fill in the displayName
+  // We target the form that has "Create Room" button (not "Join Room")
+  const createForm = page
+    .locator('form')
+    .filter({ has: page.locator('button:has-text("Create Room")') });
+  await createForm.locator('input[name="displayName"]').fill(hostName);
+
   // Click create room button
-  await page.click('button:has-text("Create Room")');
-  
+  await createForm.locator('button:has-text("Create Room")').click();
+
   // Wait for navigation to room page
-  await page.waitForURL(/\/room\/[A-Z0-9]+/);
-  
+  await page.waitForURL(/\/room\/[A-Z0-9]+/, { timeout: 30000 });
+
   // Extract room ID from URL
   const url = page.url();
   const match = url.match(/\/room\/([A-Z0-9]+)/);
-  
+
   if (!match) {
     throw new Error('Failed to extract room ID from URL');
   }
-  
+
   return {
     roomId: match[1],
     hostName,
@@ -48,23 +55,26 @@ export async function createRoom(page: Page, hostName: string): Promise<RoomInfo
  */
 export async function joinRoom(page: Page, roomId: string, guestName: string): Promise<void> {
   await page.goto('/');
-  
+
+  // Wait for the page to load
+  await page.waitForLoadState('domcontentloaded');
+
   // Click "Join Room" button to open dialog
   await page.click('button:has-text("Join Room")');
-  
+
   // Wait for dialog to open
   const dialog = page.locator('[role="dialog"]');
-  await dialog.waitFor({ state: 'visible' });
-  
+  await dialog.waitFor({ state: 'visible', timeout: 5000 });
+
   // Fill in the join form within the dialog
   await dialog.locator('input[name="roomId"]').fill(roomId);
   await dialog.locator('input[name="displayName"]').fill(guestName);
-  
+
   // Click join button in dialog
   await dialog.locator('button:has-text("Join Room")').click();
-  
+
   // Wait for navigation to room page
-  await page.waitForURL(`/room/${roomId}`);
+  await page.waitForURL(`/room/${roomId}`, { timeout: 30000 });
 }
 
 /**
