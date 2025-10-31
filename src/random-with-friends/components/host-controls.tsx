@@ -1,10 +1,10 @@
 "use client";
 
-import * as React from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { pusherClient } from "@/lib/pusher";
+import { useRouter } from "next/navigation";
+import * as React from "react";
+import { toast } from "sonner";
 
 export function HostControls({ roomId }: { roomId: string }) {
   const router = useRouter();
@@ -52,7 +52,12 @@ export function HostControls({ roomId }: { roomId: string }) {
 
   return (
     <div className="flex items-center gap-2">
-      <Button variant="destructive" onClick={handleClose} disabled={loading}>
+      <Button
+        variant="destructive"
+        onClick={handleClose}
+        disabled={loading}
+        data-testid="close-room-button"
+      >
         {loading ? "Closing..." : "Close Room"}
       </Button>
     </div>

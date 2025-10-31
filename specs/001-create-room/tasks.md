@@ -36,7 +36,7 @@
 
 - [x] T014 [US2] Create join room form component in src/random-with-friends/components/join-room-form.tsx
 - [x] T015 [P] [US2] Add room existence check API in src/random-with-friends/app/api/rooms/[roomId]/exists/route.ts
-- [ ] T016 [P] [US2] Implement room join validation in src/random-with-friends/lib/room-validation.ts
+- [x] T016 [P] [US2] Implement room join validation in src/random-with-friends/lib/room-validation.ts
 - [x] T017 [US2] Set up Pusher auth endpoint in src/random-with-friends/app/api/pusher/auth/route.ts
 
 ## Phase 5: Connection Handling (US2/US3)
@@ -46,21 +46,21 @@
 
 ### Implementation Tasks
 
-[X] T018 [P] Create connection status component in src/random-with-friends/components/room-connection-status.tsx
-[X] T019 Implement reconnection handling in participant list component
-[X] T020 [P] Add host promotion logic in src/random-with-friends/lib/host-management.ts
-[X] T021 [US3] Create host controls component in src/random-with-friends/components/host-controls.tsx
-[X] T022 [US3] Implement room closure endpoint in src/random-with-friends/app/api/rooms/[roomId]/close/route.ts
+[x] T018 [P] Create connection status component in src/random-with-friends/components/room-connection-status.tsx
+[x] T019 Implement reconnection handling in participant list component
+[x] T020 [P] Add host promotion logic in src/random-with-friends/lib/host-management.ts
+[x] T021 [US3] Create host controls component in src/random-with-friends/components/host-controls.tsx
+[x] T022 [US3] Implement room closure endpoint in src/random-with-friends/app/api/rooms/[roomId]/close/route.ts
 
 ## Phase 6: Tests and Polish
 
-- [ ] T023 [P] Create base test utilities in test/e2e/utils/room-helpers.ts
-- [ ] T024 [P] Add room creation E2E test in test/e2e/room-creation.spec.ts
-- [ ] T025 [P] Add room joining E2E test in test/e2e/room-joining.spec.ts
-- [ ] T026 [P] Add host management E2E test in test/e2e/host-management.spec.ts
-- [ ] T027 Add performance monitoring for success criteria metrics
-- [ ] T028 Add error boundaries and fallback UI components
-- [ ] T029 [P] Write deployment documentation in src/random-with-friends/README.md
+- [x] T023 [P] Create base test utilities in test/e2e/utils/room-helpers.ts
+- [x] T024 [P] Add room creation E2E test in test/e2e/room-creation.spec.ts
+- [x] T025 [P] Add room joining E2E test in test/e2e/room-joining.spec.ts
+- [x] T026 [P] Add host management E2E test in test/e2e/host-management.spec.ts
+- [x] T027 Add performance monitoring for success criteria metrics
+- [x] T028 Add error boundaries and fallback UI components
+- [x] T029 [P] Write deployment documentation in src/random-with-friends/README.md
 
 ## Dependencies
 

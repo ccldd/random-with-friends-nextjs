@@ -16,8 +16,7 @@ export default defineConfig({
       'html',
       {
         open: 'never',
-        outputDir: './playwright-report',
-        outputFolder: new Date().toISOString().split('T')[0],
+        outputFolder: '../playwright-report',
       },
     ],
   ],

@@ -1,5 +1,5 @@
-import PusherClient from "pusher-js";
 import PusherServer from "pusher";
+import PusherClient from "pusher-js";
 
 interface PusherClientWithConfig extends PusherClient {
   config: any; // Using any for now since we just need the auth property
@@ -8,6 +8,10 @@ interface PusherClientWithConfig extends PusherClient {
 // Initialize Pusher Client
 export const pusherClient = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
   cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
+  authEndpoint: "/api/pusher/auth",
+  auth: {
+    headers: {},
+  },
 }) as PusherClientWithConfig;
 
 // Initialize Pusher Server

@@ -1,10 +1,10 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { pusherClient } from "@/lib/pusher";
+import { Participant } from "@/lib/schemas";
 import * as React from "react";
 import { toast } from "sonner";
-import { Badge } from "@/components/ui/badge";
-import { Participant } from "@/lib/schemas";
-import { pusherClient } from "@/lib/pusher";
 
 interface ParticipantListProps {
   roomId: string;
@@ -21,6 +21,23 @@ export function ParticipantList({ roomId }: ParticipantListProps) {
 
   // Subscribe to presence channel and handle member events
   React.useEffect(() => {
+    // Get displayName and role from URL query params
+    const params = new URLSearchParams(window.location.search);
+    const displayName = params.get("displayName");
+    const role = params.get("role") || "guest";
+
+    if (!displayName) {
+      toast.error("Display name not found. Returning to home.");
+      window.location.href = "/";
+      return;
+    }
+
+    // Set auth headers for Pusher authentication
+    pusherClient.config.auth.headers = {
+      "x-display-name": displayName,
+      "x-room-role": role,
+    };
+
     const channel = pusherClient.subscribe(channelName);
 
     function handleSubscriptionSucceeded(members: { [id: string]: PresenceMember }) {
@@ -103,17 +120,22 @@ export function ParticipantList({ roomId }: ParticipantListProps) {
   }, [roomId, channelName]);
 
   return (
-    <div className="bg-background border rounded-lg p-4">
+    <div className="bg-background border rounded-lg p-4" data-testid="participant-list">
       <h2 className="text-xl font-semibold mb-4">Participants</h2>
       <div className="space-y-2">
         {participants.map(participant => (
           <div
             key={participant.sessionId}
+            data-testid="participant-item"
             className="flex items-center justify-between px-3 py-2 bg-muted rounded"
           >
             <div className="flex items-center gap-2">
-              {participant.displayName}
-              {participant.role === "host" && <Badge variant="secondary">Host</Badge>}
+              <span data-testid="participant-name">{participant.displayName}</span>
+              {participant.role === "host" && (
+                <Badge variant="secondary" data-testid="host-badge">
+                  Host
+                </Badge>
+              )}
             </div>
             <div className="text-xs text-muted-foreground">
               {participant.status === "connected" ? "●" : "○"}

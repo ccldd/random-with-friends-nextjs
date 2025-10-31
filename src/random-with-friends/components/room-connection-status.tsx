@@ -1,9 +1,9 @@
 "use client";
 
-import * as React from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { pusherClient } from "@/lib/pusher";
 import { cn } from "@/lib/utils";
+import * as React from "react";
 
 export function RoomConnectionStatus({ roomId }: { roomId: string }) {
   const [connectionState, setConnectionState] = React.useState(pusherClient.connection.state);
@@ -42,6 +42,8 @@ export function RoomConnectionStatus({ roomId }: { roomId: string }) {
     <div className="fixed bottom-4 right-4">
       {/* Connection indicator dot */}
       <div
+        data-testid="connection-status"
+        data-status={connectionState}
         className={cn(
           "w-2 h-2 rounded-full",
           connectionState === "connected"
